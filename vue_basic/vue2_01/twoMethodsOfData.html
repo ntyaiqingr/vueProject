@@ -1,0 +1,62 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root1">
+        <h2>{{ name }}</h2>
+    </div>
+
+    <div id="root2">
+        <h2>{{ name }}</h2>
+    </div>
+
+    <div id="root3">
+        <h2>{{ name }}</h2>
+    </div>
+
+    <div id="root4">
+        <h2>{{ name }}</h2>
+    </div>
+    
+</body>
+<script>
+    // el的两种写法
+    const v1 = new Vue({
+        el: "#root1",
+        data: {
+            name: 'Nick1'
+        }
+    })
+
+    const v2 = new Vue({
+        data: {
+            name: 'Nick2'
+        }
+    })
+    v2.$mount('#root2')
+
+    //data的两种写法 
+    new Vue({
+        el: '#root3',
+        data: {
+            name: 'Nick3'
+        }
+    })
+
+    new Vue({
+        el: '#root4',
+        data() {
+            console.log("-------------", this);
+            return {
+                name: 'Nick4'
+            }
+        }
+    })
+
+</script>
+</html>
