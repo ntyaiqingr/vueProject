@@ -1,0 +1,44 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="../js/vue.js"></script>
+</head>
+<body>
+
+    <!-- 
+        MVVM 模型
+            1. M 模型model data中的数据
+            2. V 视图View 模板代码
+            3. VM 视图模型 Vue实例
+        
+        data中所有的属性，最后都会在vm身上
+        vm身上的所有属性，已经Vue原型中的所有属性， 在Vue模板中都可以直接使用
+
+     -->
+    <div id="root">
+        <h1>Address: {{ address }}</h1>
+        <h1>Name: {{ name }}</h1>
+        <h1>Testing 1: {{ $data }}</h1>
+        <h1>Testing 2: {{ $mount }}</h1>
+    </div>
+</body>
+
+<script type="text/javascript">
+    Vue.config.productionTip = false
+    
+    const vm = new Vue({
+        el: '#root',
+        data() {
+            return {
+                address: 'Luoyang',
+                name: 'Ye'
+            }
+        }
+    })
+
+    console.log(vm)
+</script>
+</html>

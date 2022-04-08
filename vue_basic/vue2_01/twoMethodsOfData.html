@@ -41,12 +41,17 @@
     v2.$mount('#root2')
 
     //data的两种写法 
+
+    //对象式
     new Vue({
         el: '#root3',
         data: {
             name: 'Nick3'
         }
     })
+
+    //函数式 组件化下 必须使用函数式
+    //由Vue管理的函数，一定不要使用箭头函数， 一旦写了箭头函数， this就不再代表Vue实例了， 而是上一层的windows obj
 
     new Vue({
         el: '#root4',
