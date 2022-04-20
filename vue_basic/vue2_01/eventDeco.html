@@ -1,0 +1,117 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+    <style>
+        *{
+            margin-top: 20px;
+        }
+        .demo1{
+            height: 50px;
+            background-color: skyblue;
+        }
+        .box1{
+            padding: 20px;
+            background-color: yellow;
+        }
+        .box2{
+            padding: 20px;
+            background-color: orangered;
+        }
+        .list{
+            width: 200px;
+            height: 200px;
+            background-color: peru;
+            overflow: auto;
+        }
+        li{
+            height: 100px;
+        }
+    </style>
+</head>
+<body>
+    <!-- 
+        Vue中的事件修饰符
+        1. prevent 阻止默认的事件
+        2. stop 阻止事件冒泡
+        3. once 事件只触发一次
+        4. capture 使用事件的捕获模式
+        5. self 只有event.target 是当前的操作元素才触发事件
+        6. passive 事件的默认行为是立刻执行 无需等待事件的回调执行完毕
+
+     -->
+    <div id="root">
+        <h1>Welcome to {{ name }}</h1>
+        <!-- prevent 阻止默认的事件 -->
+        <a href="http://www.bing.com" @click.prevent="showInfo">Click me1</a>
+        <!-- stop 阻止事件冒泡 -->
+        <div class="demo1" @click="showInfo">
+            <button @click.stop="showInfo">Click me2</button>
+        </div>
+        <!-- once 事件只触发一次 -->
+        <button @click.once="showInfo">Click me2</button>
+
+        <!-- capture 使用事件的捕获模式 
+             捕获是由外到内 冒泡是由内到外 
+        -->
+        <div class="box1" @click.capture="showMsg1(1, $event)">
+            div
+            <div class="box2" @click="showMsg2(2, $event)">div</div>
+        </div>
+
+        <!-- self 只有event.target 是当前的操作元素才触发事件 -->
+        <div class="demo1" @click.self="showInfo">
+            div
+            <button @click="showInfo">Click me</button>
+        </div>
+
+        <!-- passive 事件的默认行为是立刻执行 无需等待事件的回调执行完毕 -->
+        <!-- 滚动条 -->
+        <ul class="list" @scroll="demo">
+            <li>1</li>
+            <li>2</li>
+            <li>3</li>
+            <li>4</li>
+        </ul>
+        <!-- 滚轮 -->
+        <ul class="list" @wheel.passive="demo">
+            <li>5</li>
+            <li>6</li>
+            <li>7</li>
+            <li>8</li>
+        </ul>
+    </div>
+</body>
+<script>
+    Vue.config.productionTip = false
+    const vm = new Vue({
+        el: "#root",
+        data(){
+            return {
+                name: "Vue"
+            }
+        },
+        methods: {
+            showInfo(event){
+                console.log(event.target)
+                alert("Hello")
+            },
+            showMsg1(number, event){
+                console.log(number)
+            },
+            showMsg2(number, event){
+                console.log(number)
+            },
+            demo(event){
+                for(let i=0; i < 100000; i++) {
+                    console.log("#")
+                }
+                console.log("done")
+            }
+        }
+    })
+</script>
+</html>
