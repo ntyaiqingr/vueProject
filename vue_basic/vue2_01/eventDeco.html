@@ -48,6 +48,7 @@
         <!-- prevent 阻止默认的事件 -->
         <a href="http://www.bing.com" @click.prevent="showInfo">Click me1</a>
         <!-- stop 阻止事件冒泡 -->
+        <!-- 修饰符可以连续写 譬如@click..stop.prevent -->
         <div class="demo1" @click="showInfo">
             <button @click.stop="showInfo">Click me2</button>
         </div>

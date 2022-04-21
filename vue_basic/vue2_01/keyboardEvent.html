@@ -31,10 +31,12 @@
         
         Vue.config.keyCodes.自定义键名 = 键码 可以去定制按键别名
 
+        keyboard event can be binding together like @keyup.ctrl.y 同时按下ctrl 和y
+
      -->
     <div id="root">
         <h2>Welcome to {{ name }}</h2>
-        <input type="text" placeholder="Click on Enter" @keyup.caps-lock="showInfo">
+        <input type="text" placeholder="Click on Enter" @keyup.y="showInfo">
     </div>
 </body>
 <script>
