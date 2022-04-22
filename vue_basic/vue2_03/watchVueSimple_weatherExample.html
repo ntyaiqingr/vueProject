@@ -1,0 +1,55 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>It is {{ info }} today</h2>
+        <button @click="changeWeather">Change weather</button>
+    </div>
+</body>
+<script>
+    Vue.config.productionTip = false
+    const vm = new Vue({
+        el: "#root",
+        data(){
+            return {
+                isHot: true
+            }
+        },
+        computed: {
+            info() {
+                return this.isHot ? "hot" : "cold"
+            }
+        },
+        methods: {
+            changeWeather(){
+                this.isHot = !this.isHot
+            }
+        },
+        // 一种书写方式
+        watch: {
+            // isHot: {
+            //     //immediate：true 初始化时 就让handler被调用一次
+            //     //deep: true // 深度监测
+            //     // handler什么时候调用 当isHot被调用的时候
+            //     handler(newVal, oldVal) {
+            //         console.log("isHot is called")
+            //     }
+            // }
+            // 当不需要配置deep immediate时可以简写
+            // isHot(newVal, oldVal){
+            //     console.log("weather changed")
+            // }
+        }   
+    })
+    vm.$watch("isHot", function(newVal,oldVal){
+        console.log("weather changed", newVal, oldVal, this)
+    })
+
+</script>
+</html>
