@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        第一个数据并不会改变
+    -->
+    <div id="root">
+        <h2>Shcool Name: {{ schoolName }}</h2>
+        <h2>School Address: {{ schoolAddress}}</h2>
+        <br>
+        <h2>Student Name: {{ student.name }}</h2>
+        <h2>Student Real Age: {{ student.age.rAge }} - Statement Age: {{ student.age.sAge}}</h2>
+        <button @click="addGender">Add a gender, the default value is M</button>
+        <h2 v-if="student.gender">Student Gender: {{ student.gender }}</h2>
+        <h2>friends</h2>
+        <ul>
+            <li v-for="(f, index) in student.friends" :key="index">
+                {{ f.name }} -- {{ f.age }}
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    Vue.config.productionTip = false
+    const vm = new Vue({
+        el: "#root",
+        data(){
+            return {
+                schoolName: "YiGao",
+                schoolAddress: "TangGong Road",
+                student: {
+                    name: "Ye",
+                    age: {
+                        rAge: 31,
+                        sAge: 18
+
+                    },
+                    gender: "",
+                    friends: [
+                        {name: "Nick", age: 32},
+                        {name: "Tong", age: 30}
+                    ]
+                }
+            }
+        },
+        methods: {
+            addGender(){
+                // Vue.set(this.student, "gender", "F")
+                this.$set(this.student, "gender", "F")
+            }
+        },
+    })
+
+</script>
+</html>

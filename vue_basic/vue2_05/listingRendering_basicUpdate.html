@@ -1,0 +1,46 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        第一个数据并不会改变
+    -->
+    <div id="root">
+        <h2>Persons List</h2>
+        <button @click="updateMei">Click to update madongmei</button>
+        <ul>
+            <li v-for="(p, index) in persons" :key="p.id">
+                {{ p.name }} - {{ p.age }} - {{ p.gender}}
+            </li>
+        </ul>
+    </div>
+    
+</body>
+<script>
+    Vue.config.productionTip = false
+    new Vue({
+        el: "#root",
+        data(){
+            return {
+                persons: [
+                    {id:"001", name:"madongmei", age: 18, gender: "F"},
+                    {id:"002", name:"zhoudongyu", age: 19, gender: "F"},
+                    {id:"003", name:"zhoujielun", age: 20, gender: "M"},
+                    {id:"004", name:"wenzhaolun", age: 21, gender: "M"}
+                ]
+            }
+        },
+        methods: {
+            updateMei(){
+                this.persons[0] = {id:"001", name:"malaoshi", age: 70, gender: "M"}
+            }
+        },
+    })
+
+</script>
+</html>

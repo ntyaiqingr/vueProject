@@ -1,0 +1,124 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        Vue 监视数据的原理：
+            1. Vue会监视data中所有层次的数据
+
+            2. 如何检测对象中的数据？
+                通过setter实现监测， 且要在new Vue时就要传入要监测的数据
+                1） 对象中后追加的属性，Vue默认不做响应式处理
+                2） 如果需要后添加的属性做响应式，要使用下面的API
+                    (1) Vue.set(target, propertyName/index, value)
+                    (2) vm.$set(target, propertyName/index, value)
+            
+            3. 如果监测数组中的数据
+                通过包裹数组更新元素的方法实现，本质就是做了两件事
+                1） 调用原生对应的方法对数组进行更新
+                2） 重新解析模板，进而更新页面
+
+            4. 在Vue修改数组中的某个元一定要使用如下的方法
+                1）使用这些API 
+                    (1) push(val) => The push() method adds one or more elements to the end of an array and 
+                    returns the new length of the array.
+                    (2) pop() => The pop() method removes the last element from an array and returns that element. 
+                    This method changes the length of the array.
+                    (3) shift() => The shift() method removes the first element from an array and
+                    returns that removed element. This method changes the length of the array.
+                    (4) unshift() => The unshift() method adds one or more elements to
+                    the beginning of an array and returns the new length of the array.
+                    (5) splice() => The splice() method changes the contents of an array by 
+                    removing or replacing existing elements and/or adding new elements in place
+                    (6) sort() =>The sort() method sorts the elements of an array in place and
+                    returns the sorted array
+                    (7) reverse() =>The reverse() method reverses an array in place. 
+                    The first array element becomes the last, and the last array element becomes the first.
+                2) Vue.set 或者 vm.$set
+                特别注意 Vue.set/vm.$set不可以给vm或者vm的根对象添加属性
+                譬如例子中 不可以给student直接添加一个例如country的属性
+
+    -->            
+    <div id="root">
+        <h2>Info of student</h2>
+        <button @click="addAge">Add one to age</button>
+        <button @click="addGender">Add gender, the default value is M</button>
+        <button @click="changeGender">Change gender</button>
+        <button @click="addFriend">Add one friend to the top of the list</button>
+        <button @click="updateFriend">Change the name of first friend to YeQing</button>
+        <button @click="addHobby">Add one hobby to the buttom of the list</button>
+        <button @click="updateHobby">Change first hobby to AiNi</button>
+        <button @click="removeHobbyChi">remove hobby of CHi</button>
+        <h3>Name: {{ student.name }}</h3>
+        <h3>Age: {{ student.age }}</h3>
+        <h3 v-if="student.gender">Gender: {{ student.gender }}</h3>
+        <h3>Hobbies: </h3>
+        <ul>
+            <li v-for="(h, index) in student.hobby" :key="index">
+                {{ h }}
+            </li>
+        </ul>
+        <h3>Friends: </h3>
+        <ul>
+            <li v-for="(f, index) in student.friends" :key="index">
+                {{ f.name }} -- {{ f.age }}
+            </li>
+        </ul>
+    </div>
+</body>
+<script>
+    Vue.config.productionTip = false
+    const vm = new Vue({
+        el: "#root",
+        data(){
+            return {
+                student: {
+                    name: "Nick",
+                    age: 31,
+                    hobby: ["Chi", "He", "Piao"],
+                    friends: [
+                        {name: "Ye", age: 31},
+                        {name: "Qing", age: 18}
+                    ]
+                }
+            }
+        },
+        methods: {
+            addAge(){
+                this.student.age++
+            },
+            addGender(){
+                Vue.set(this.student, "gender", "M")
+            },
+            changeGender(){
+                this.student.gender = "F"
+            },
+            addFriend(){
+                this.student.friends.unshift({name:"Xiao", age: 10})
+            },
+            updateFriend(){
+                this.student.friends[0].name = "YeQing",
+                this.student.friends[0].age = 33
+            },
+            addHobby(){
+                this.student.hobby.push("Aiwo")
+            },
+            updateHobby(){
+                // this.student.hobby.splice(0,1,"Aini")
+                // Vue.set(this.student.hobby, 0, "Aini")
+                vm.$set(this.student.hobby, 0, "Aini")
+            },
+            removeHobbyChi(){
+                this.student.hobby = this.student.hobby.filter((h)=>{
+                    return h !== "Chi"
+                })
+            }
+        }
+    })
+</script>
+</html>

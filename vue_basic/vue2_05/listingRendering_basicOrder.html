@@ -1,0 +1,56 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>Persons List</h2>
+        <input type="text" placeholder="Please enter a name" v-model="keyWord">
+        <button @click="sortType = 1">Age Asc</button>
+        <button @click="sortType = 2">Age Desc</button>
+        <button @click="sortType = 0">Age Original</button>
+        <ul>
+            <li v-for="(p, index) in filPersons" :key="index">
+                {{ p.name }} - {{ p.age }} - {{ p.gender}}
+            </li>
+        </ul>
+    </div>
+    
+</body>
+<script>
+    Vue.config.productionTip = false
+    new Vue({
+        el: "#root",
+        data(){
+            return {
+                keyWord: "",
+                sortType: 0, // 0=>ori 1=>asc 2=> desc
+                persons: [
+                    {id:"001", name:"madongmei", age: 20, gender: "F"},
+                    {id:"002", name:"zhoudongyu", age: 30, gender: "F"},
+                    {id:"003", name:"zhoujielun", age: 10, gender: "M"},
+                    {id:"004", name:"wenzhaolun", age: 50, gender: "M"}
+                ]
+            }
+        },
+        computed: {
+            filPersons() {
+                const arr =  this.persons.filter((p)=>{
+                        return p.name.indexOf(this.keyWord) !== -1
+                    })
+                if(this.sortType) {
+                    arr.sort((p1,p2)=> { 
+                        return this.sortType === 1 ? p2.age - p1.age : p1.age - p2.age
+                    })
+                }
+                return arr
+            }
+        }
+        
+    })
+</script>
+</html>
