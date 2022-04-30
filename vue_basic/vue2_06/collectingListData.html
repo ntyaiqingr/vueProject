@@ -1,0 +1,87 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!-- 
+        收集表单数据
+            1）若 <input type="text">则v-model收集的是value值 用户输入的就是value值
+            2）若 <input type="radio"> 则v-model收集的是value值 且要给标签配置value值
+            3）若<input type="checkbox">
+                1) 没有配置input的value属性 那么收集的就是checked（布尔值）
+                2）配置input的value属性
+                    （1）v-model的初始值是非数组 那么收集就是checked
+                    （2）v-model的初始值是数组 那么收集的就是value组成的数组
+
+            备注：v-model的三个修饰符
+            1）lazy失去焦点后再收集数据
+            2）number输入字符串转为有效的数字
+            3）trim首尾空格过滤
+    -->
+    <div id="root">
+        <form @submit.prevent="demo">
+            <label for="account">account:</label>
+            <input type="text" id="account" v-model.trim="userInfo.account">
+            <br>
+            <label for="password">password:</label>
+            <input type="password" id="password" v-model="userInfo.password">
+            <br>
+            Age:<input type="number" v-model.number="userInfo.age">
+            <br>
+            Gender:
+            Man <input type="radio" name="gender" value="Man" v-model="userInfo.gender">
+            Female <input type="radio" name="gender" value="Female" v-model="userInfo.gender"> 
+            <br>
+            Hobby:
+            AiNi <input type="checkbox" v-model="userInfo.hobby" value="AiNi">
+            AiQing <input type="checkbox" v-model="userInfo.hobby" value="AiQing">
+            AiYe <input type="checkbox" v-model="userInfo.hobby" value="AiYe">
+            AiXiao <input type="checkbox" v-model="userInfo.hobby" value="AiXiao">
+            <br>
+            Country:
+            <select v-model="userInfo.country">
+                <option value="">Please select a country</option>
+                <option value="China">China</option>
+                <option value="USA">USA</option>
+                <option value="Canada">Canada</option>
+            </select>
+            <br>
+            Other Info:
+            <textarea v-model.lazy="userInfo.other"></textarea>
+            <br>
+            <input type="checkbox" v-model="userInfo.agreement">Read&Accept <a href="https://www.udemy.com">User Agreement</a>
+            <br>
+            <button>Submit</button>
+        </form>
+    </div>
+</body>
+<script>
+    Vue.config.productionTip = false
+    new Vue({
+        el: "#root",
+        data(){
+            return {
+                userInfo: {
+                    account: "",
+                    password: "",
+                    age: "",
+                    gender: "Female",
+                    hobby: [],
+                    country: "China",
+                    other: "",
+                    agreement: ""
+                }
+            } 
+        },
+        methods: {
+            demo(){
+                console.log(JSON.stringify(this.userInfo))
+            }
+        }
+    })  
+</script>
+</html>
