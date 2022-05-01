@@ -1,0 +1,36 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        [v-cloak]{
+            display: none;
+        }
+    </style>  
+</head>
+<body>
+    <!--  
+        v-cloak
+            1. 本质是一个特殊属性 Vue实例创建完毕并接管容器 会删除v-cloak属性
+            2. 使用CSS配合v-cloak可以解决网速慢是页面展示出{{***}}的问题
+    -->
+    <div id="root">
+        <!-- 打开页面后h2里面并没有v-cloak属性 -->
+        <h2 v-cloak>{{ name }}</h2>
+    </div>
+    <script src="../js/vue.js"></script>
+</body>
+<script>
+    Vue.config.productionTip = false
+    new Vue({
+        el: "#root",
+        data(){
+            return {
+                name: "ye"
+            }
+        }
+    })
+</script>
+</html>
