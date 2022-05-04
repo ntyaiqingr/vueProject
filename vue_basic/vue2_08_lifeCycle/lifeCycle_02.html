@@ -1,0 +1,59 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <h2>N is {{ n }}</h2>
+        <button @click="add">add one to n</button>
+    </div>
+</body>
+<script>
+    Vue.config.productionTip = false
+    new Vue({
+        el: "#root",
+        data(){
+            return {
+                n: 1
+            }
+        },
+        methods: {
+            add(){
+                this.n++
+            }
+        },
+        beforeCreate() {
+            console.log("beforeCreate");
+            // console.log(this);
+            // debugger
+        },
+        created(){
+            console.log("created");
+            // console.log(this);
+            // debugger
+        },
+        beforeMount() {
+            console.log("beforeMount");
+        },
+        mounted() {
+            console.log("mounted");
+        },
+        beforeUpdate() {
+            console.log("beforeUpdate");
+        },
+        updated() {
+            console.log("updated");
+        },
+        beforeDestroy() {
+            console.log("beforeDestroy");
+        },
+        destroyed() {
+            console.log("destroyed");
+        },
+    })
+</script>
+</html>
