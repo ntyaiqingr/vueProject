@@ -1,0 +1,86 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="root">
+        <app></app>  
+    </div>
+
+</body>
+<script>
+    Vue.config.productionTip = false
+
+    // 定义student组件
+    const student = {
+        data() {
+            return {
+                studentName: "Nick",
+                age: 30
+            }
+        },
+        template: `
+            <div>
+                <h2>School Name: {{ studentName }}</h2>
+                <h2>School Address: {{ age }}</h2>
+            </div>
+        `
+    }
+
+    // 定义school组件
+    const school = {
+        data() {
+            return {
+                schoolName: "yigao",
+                address: "luoyang"
+            }
+        },
+        template: `
+            <div>
+                <h2>School Name: {{ schoolName }}</h2>
+                <h2>School Address: {{ address }}</h2>
+                <student></student>
+            </div>
+        `,
+        components: {
+            student
+        }
+    }
+    // 顶一个hello组件
+    const hello = {
+        template: `
+            <h2>{{ msg}}</h2>
+        `,
+        data() {
+            return {
+                msg: "Hi, Ye"
+            }
+        },
+    }
+    // 创建一个app组件
+    const app = {
+        components: {
+            school,
+            hello
+        },
+        template: `
+            <div>
+                <hello></hello>
+                <school></school> 
+            </div>
+        `
+    }
+    
+    new Vue({
+        el: "#root",
+        components: {
+            app
+        }
+    })
+
+</script>
+</html>

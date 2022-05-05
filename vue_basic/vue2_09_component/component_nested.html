@@ -1,0 +1,156 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <!--  
+        Vue中使用组件的三个步骤
+        1. 定义组件（创建组件）
+        2. 注册组件
+        3. 使用组件（写组件标签）
+
+        如何定义一个组件
+        使用Vue.extend(options)创建 其中options和new Vue(options)时传入的options几乎是一样的
+        区别如下
+            1.el不要写 -最终所有的组件都要经过一个vm的管理 由vm中的el来决定去服务哪一个容器
+            2. data必须写成函数形式 -避免组件被重复使用时 数据存在引用关系
+        备注 使用tempplate可以配置组件结构
+
+        如何注册组件
+        1. 局部注册 靠new Vue的时候传入components选项
+        2. 全局注册 靠Vue.component("组件名"，组件)
+
+        编写组件标签
+        <lover></lover>
+    -->
+    <!--  
+        1 关于组件名
+            一个单词组成：
+                第一种写法 首字母小写 school
+                第二种写法 首字母大写 School
+            多个单词组成
+                第一种写法（kebab-case命名）my-school
+                第二种写法（CamelCase命名）MySchool（需要Vue脚手架支持）
+            备注：
+                1）组件名尽可能回避HTML中已有的元素名称 例如h2 H2也不行
+                2）可以使用在定义组件时的name配置向指定组件在开发者工具中呈现的名字
+
+        2.关于组件标签：
+            第一种写法<school></school>
+            第二种写法<school/>
+            备注 不使用脚手架的情况下 <school/>会导致后续组件不能渲染
+
+        3.一个简写方式
+            const school = Vue.extend(options) 可以简写为const school = options
+    -->
+    <div id="root">
+        <school></school>
+        <br>
+        <lover></lover>
+        <br>
+        <school></school>
+        <br>
+        <student></student>
+        
+    </div>
+
+    <div id="root2">
+        <lover></lover>
+    </div>
+</body>
+<script>
+    Vue.config.productionTip = false
+    // 第一步 创建组件
+    // 创建school组件
+    const school = Vue.extend({
+        // 定义组件的时候 一定不要写el配置项 因为最终所有的组件都要被一个vm管理 由vm决定服务对象
+        // el: "#root"
+        // name: "myshool",
+        data() {
+            return {
+                schoolName: "yigao",
+                address: "luoyang"
+            }
+        },
+        template: `
+            <div>
+                <h2>School Name: {{ schoolName }}</h2>
+                <h2>School Address: {{ address }}</h2>
+                <button @click="showName">Show name</button>
+            </div>
+        `,
+        methods: {
+            showName(){
+                alert(this.schoolName)
+            }
+        },
+    })
+
+    const student = Vue.extend({
+        data() {
+            return {
+                studentName: "Nick",
+                age: 30
+            }
+        },
+        template:`
+            <div>
+                <h2>Student Name: {{ studentName }}</h2>
+                <h2>Student Age: {{ age }}</h2>
+            </div>
+        `
+    })
+
+    const lover = Vue.extend({
+        data() {
+            return {
+                name: "Ye",
+                gender: "F"
+            }
+        },
+        template: `
+            <div>
+                <h2>Lover: {{ name }}</h2>
+                <h2>Gender: {{ gender }}</h2>
+            </div>
+        `
+    })
+
+    // 第二部全局注册组件
+    Vue.component("lover", lover)
+
+    new Vue({
+        el: "#root",
+        // 第二部 注册组件（局部注册）
+        components: {
+            // 可以简写
+            // school:school,
+            // student:student
+            school,
+            student
+        }
+    })
+
+    new Vue({
+        el: "#root2"
+    })
+
+
+
+    // new Vue({
+    //     el: "#root",
+    //     data(){
+    //         return {
+    //             schoolName: "yigao",
+    //             address: "luoyang",
+    //             studentName: "Ye",
+    //             age: 30
+    //         }
+    //     }
+    // })
+</script>
+</html>
