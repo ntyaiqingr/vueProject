@@ -1,0 +1,61 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>sessionStorage</title>
+</head>
+<body>
+    <button onclick="saveData()">Click me to store data</button>
+    <button onclick="readDate()">Click me to read data</button>
+    <button onclick="deleteDate()">Click me to delete data</button>
+    <button onclick="clearAllDate()">Click me to clear all data</button>
+    <script>
+        let person1 = {
+            name: 'YeQing',
+            gender: 'F'
+        }
+        function saveData(){
+            sessionStorage.setItem('msg', 520)
+            sessionStorage.setItem('msg1', 'ye!')
+            sessionStorage.setItem('msg2', 'qing!')
+            sessionStorage.setItem('person', JSON.stringify(person1))
+
+        }
+        function readDate(){
+            console.log(sessionStorage.getItem('msg1'))
+            console.log(sessionStorage.getItem('msg'))
+            const result = sessionStorage.getItem('person')
+            console.log(JSON.parse(result));
+        }
+        function deleteDate(){
+            sessionStorage.removeItem('msg1')
+        }
+
+        function clearAllDate(){
+            sessionStorage.clear()
+        }
+
+        /* 
+            webStorage
+            1. 储存内容大小一般支持5MB左右不同浏览器可能不一样
+            2. 浏览器通过Window.sessionStorage & Window.localStorage属性来实现本地存储
+            3. 相关API
+                1) xxxxStorage.setItem('key', 'value')
+                该方法接受一个key和value作为参数 会把键值添加内储存中，如果键名还在，则更新对应的值
+                2）xxxxStorage.getItem('key')
+                该方法接受一个键名作为参数 返回该键名对应的值
+                3）xxxxStorage.removeItem('key')
+                该方法接受一个键名作为参数，并把该键名从存储中删除
+                4）xxxxStorage.clear()
+                该方法会清空储存中的所有数据
+            4. 备注
+                1）sessionStorage储存的内容会随着浏览器窗口关闭而消失
+                2) localStorage储存的内容需要手动清除才会消失
+                3）getItem('key')如果key对应的value获取不到 那么返回值就是null
+                4）JSON.parse(null)的结果依然是null
+        
+        */
+    </script>
+</body>
+</html>
